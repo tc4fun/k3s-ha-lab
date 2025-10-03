@@ -67,7 +67,7 @@
 
 Verify:
 ```bash
-sudo k3s kubectl get nodes -o wide
+sudo kubectl get nodes -o wide
 ```
 Note: Embedded etcd is managed by k3s. You do not install etcd separately; just ensure ports `2379-2380/tcp` are open between servers.
 
@@ -86,7 +86,15 @@ kubectl create deployment nginx --image=nginx --replicas=2
 kubectl expose deployment nginx --type=NodePort --port=80
 kubectl get svc
 ```
-Access via: `<any-node-IP>:<nodePort>`
+
+Something like this below
+
+```bash
+NAME         TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
+kubernetes   ClusterIP   10.43.0.1      <none>        443/TCP        22h
+nginx        NodePort    10.43.240.48   <none>        80:31486/TCP   107s
+```
+here nodePort = 31486, access via browser at: `http://<any-node-IP>:<nodePort>`
 
 Here’s what happens:
 
